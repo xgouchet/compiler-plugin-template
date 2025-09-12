@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm")
     id("com.github.gmazzo.buildconfig")
     id("java-gradle-plugin")
+    id("com.vanniktech.maven.publish") version ("0.34.0")
 }
 
 sourceSets {
@@ -22,7 +23,7 @@ dependencies {
 }
 
 buildConfig {
-    packageName(project.group.toString())
+    packageName("com.droidcon.kcp.gradle")
 
     buildConfigField("String", "KOTLIN_PLUGIN_ID", "\"${rootProject.group}\"")
 
@@ -45,7 +46,7 @@ gradlePlugin {
             id = rootProject.group.toString()
             displayName = "SimplePlugin"
             description = "SimplePlugin"
-            implementationClass = "org.demiurg906.kotlin.plugin.SimpleGradlePlugin"
+            implementationClass = "com.droidcon.kcp.gradle.SimpleGradlePlugin"
         }
     }
 }

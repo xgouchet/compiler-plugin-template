@@ -6,6 +6,6 @@ plugins {
 }
 
 allprojects {
-    group = "org.jetbrains.kotlin.compiler.plugin.template"
+    group = "com.droidcon.kcp"
     version = "0.1.0-SNAPSHOT"
 }

@@ -3,6 +3,7 @@ plugins {
     `java-test-fixtures`
     id("com.github.gmazzo.buildconfig")
     idea
+    id("com.vanniktech.maven.publish") version ("0.34.0")
 }
 
 sourceSets {
