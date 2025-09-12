@@ -1,12 +1,13 @@
-package org.jetbrains.kotlin.compiler.plugin.template
+package com.droidcon.kcp.kotlin
 
+import com.droidcon.kcp.BuildConfig
 import org.jetbrains.kotlin.compiler.plugin.AbstractCliOption
 import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor
 import org.jetbrains.kotlin.config.CompilerConfiguration
 
 @Suppress("unused") // Used via reflection.
-class SimpleCommandLineProcessor : CommandLineProcessor {
+class SampleCommandLineProcessor : CommandLineProcessor {
     override val pluginId: String = BuildConfig.KOTLIN_PLUGIN_ID
 
     override val pluginOptions: Collection<CliOption> = emptyList()

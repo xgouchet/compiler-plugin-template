@@ -1,4 +1,4 @@
-package org.jetbrains.kotlin.compiler.plugin.template
+package com.droidcon.kcp.gradle
 
 import org.gradle.api.model.ObjectFactory
 

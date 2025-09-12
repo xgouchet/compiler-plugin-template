@@ -21,6 +21,8 @@ sourceSets {
 }
 
 idea {
+    module.isDownloadJavadoc = true
+    module.isDownloadSources = true
     module.generatedSourceDirs.add(projectDir.resolve("test-gen"))
 }
 
