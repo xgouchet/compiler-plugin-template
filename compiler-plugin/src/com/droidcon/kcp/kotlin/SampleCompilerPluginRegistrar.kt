@@ -9,7 +9,6 @@ import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
 import org.jetbrains.kotlin.config.CommonConfigurationKeys
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrarAdapter
-import org.jetbrains.kotlin.resolve.extensions.ExtraImportsProviderExtension
 
 class SampleCompilerPluginRegistrar : CompilerPluginRegistrar() {
     override val supportsK2: Boolean
@@ -24,15 +23,8 @@ class SampleCompilerPluginRegistrar : CompilerPluginRegistrar() {
             CompilerMessageSeverity.WARNING,
             "SampleCompilerPluginRegistrar:registering extensions"
         )
-
-        FirExtensionRegistrarAdapter.registerExtension(
-            SampleFirExtensionRegistrar(messageCollector)
-        )
-        IrGenerationExtension.registerExtension(
-            SampleIrGenerationExtension(messageCollector)
-        )
-        ExtraImportsProviderExtension.registerExtension(
-            KotlinImportExtension()
-        )
+        val compileCheckAsErrors = configuration.get(SampleCommandLineProcessor.ARG_COMPILE_CHECK_AS_ERRORS) ?: false
+        FirExtensionRegistrarAdapter.registerExtension(SampleFirExtensionRegistrar(compileCheckAsErrors))
+        IrGenerationExtension.registerExtension(SampleIrGenerationExtension(messageCollector))
     }
 }

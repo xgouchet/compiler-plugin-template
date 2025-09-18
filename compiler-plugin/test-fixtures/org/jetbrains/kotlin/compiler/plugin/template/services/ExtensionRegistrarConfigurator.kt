@@ -17,7 +17,7 @@ class ExtensionRegistrarConfigurator(testServices: TestServices) : EnvironmentCo
         configuration: CompilerConfiguration
     ) {
         FirExtensionRegistrarAdapter.registerExtension(
-            SampleFirExtensionRegistrar(configuration.messageCollector)
+            SampleFirExtensionRegistrar(true)
         )
         IrGenerationExtension.registerExtension(
             SampleIrGenerationExtension(configuration.messageCollector)

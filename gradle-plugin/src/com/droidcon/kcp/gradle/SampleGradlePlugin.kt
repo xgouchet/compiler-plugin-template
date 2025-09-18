@@ -9,9 +9,10 @@ import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 
 @Suppress("unused") // Used via reflection.
-class SimpleGradlePlugin : KotlinCompilerPluginSupportPlugin {
+class SampleGradlePlugin : KotlinCompilerPluginSupportPlugin {
+
     override fun apply(target: Project) {
-        target.extensions.create("simplePlugin", SimpleGradleExtension::class.java)
+        target.extensions.create("samplePlugin", SampleGradleExtension::class.java)
     }
 
     override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean = true
@@ -30,14 +31,16 @@ class SimpleGradlePlugin : KotlinCompilerPluginSupportPlugin {
         val project = kotlinCompilation.target.project
 
         kotlinCompilation.dependencies { implementation(ANNOTATIONS_LIBRARY_COORDINATES) }
+
         if (kotlinCompilation.implementationConfigurationName == "metadataCompilationImplementation") {
             project.dependencies.add("commonMainImplementation", ANNOTATIONS_LIBRARY_COORDINATES)
         }
 
         return project.provider {
-            val extension = project.extensions.getByType(SimpleGradleExtension::class.java)
-
-            emptyList()
+            val extension = project.extensions.getByType(SampleGradleExtension::class.java)
+            listOf(
+                SubpluginOption("compileTimeChecksAsErrors", extension.compileTimeChecksAsErrors.toString())
+            )
         }
     }
 }

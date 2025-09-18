@@ -31,7 +31,7 @@ class LogMethodCallVisitor(
         )
     )
         .single {
-            val parameters = it.owner.valueParameters
+            val parameters = it.owner.parameters
             parameters.size == 1 && parameters[0].type == typeNullableAny
         }
 
@@ -54,10 +54,7 @@ class LogMethodCallVisitor(
         }
     }
 
-    private fun wrapFunction(
-        function: IrFunction,
-        body: IrBody
-    ): IrBlockBody {
+    private fun wrapFunction(function: IrFunction, body: IrBody): IrBlockBody {
         val blockBody = DeclarationIrBuilder(pluginContext, function.symbol).irBlockBody {
             +logFunStart(function)
 
@@ -74,7 +71,8 @@ class LogMethodCallVisitor(
         private val function: IrFunction,
     ) : IrElementTransformerVoidWithContext() {
         override fun visitReturn(expression: IrReturn): IrExpression {
-            if (expression.returnTargetSymbol != function.symbol) return super.visitReturn(expression)
+            if (expression.returnTargetSymbol != function.symbol)
+                return super.visitReturn(expression)
 
             return DeclarationIrBuilder(pluginContext, function.symbol).irBlock {
                 val result = irTemporary(expression.value)
@@ -91,7 +89,7 @@ class LogMethodCallVisitor(
     ): IrCall {
         val concat = irConcat()
         concat.addArgument(irString("⇢ ${function.name}("))
-        for ((index, valueParameter) in function.valueParameters.withIndex()) {
+        for ((index, valueParameter) in function.parameters.withIndex()) {
             if (index > 0) concat.addArgument(irString(", "))
             concat.addArgument(irString("${valueParameter.name}="))
             concat.addArgument(irGet(valueParameter))
@@ -99,7 +97,7 @@ class LogMethodCallVisitor(
         concat.addArgument(irString(")"))
 
         return irCall(funPrintln).also { call ->
-            call.putValueArgument(0, concat)
+            call.arguments[0] = concat
         }
     }
 
@@ -116,7 +114,7 @@ class LogMethodCallVisitor(
         }
 
         return irCall(funPrintln).also { call ->
-            call.putValueArgument(0, concat)
+            call.arguments[0] = concat
         }
     }
 

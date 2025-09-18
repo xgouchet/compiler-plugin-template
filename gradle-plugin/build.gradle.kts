@@ -46,7 +46,7 @@ gradlePlugin {
             id = rootProject.group.toString()
             displayName = "SimplePlugin"
             description = "SimplePlugin"
-            implementationClass = "com.droidcon.kcp.gradle.SimpleGradlePlugin"
+            implementationClass = "com.droidcon.kcp.gradle.SampleGradlePlugin"
         }
     }
 }
