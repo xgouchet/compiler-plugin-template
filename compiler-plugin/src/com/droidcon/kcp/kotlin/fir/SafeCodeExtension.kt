@@ -11,17 +11,17 @@ import org.jetbrains.kotlin.fir.analysis.extensions.FirAdditionalCheckersExtensi
 class SafeCodeExtension(session: FirSession, val compileCheckAsErrors: Boolean) :
     FirAdditionalCheckersExtension(session) {
 
-    override val declarationCheckers: DeclarationCheckers
-        get() = super.declarationCheckers
+    override val typeCheckers: TypeCheckers = TypeCheckers.EMPTY
 
-    override val expressionCheckers: ExpressionCheckers = object : ExpressionCheckers() {
-        override val functionCallCheckers: Set<FirFunctionCallChecker> = setOf(
-            UnsafeCallChecker(session, compileCheckAsErrors)
-        )
-    }
+    override val declarationCheckers: DeclarationCheckers = DeclarationCheckers.EMPTY
 
-    override val typeCheckers: TypeCheckers
-        get() = super.typeCheckers
+    override val expressionCheckers: ExpressionCheckers =
+        object : ExpressionCheckers() {
+            override val functionCallCheckers: Set<FirFunctionCallChecker> = setOf(
+                UnsafeCallChecker(session, compileCheckAsErrors)
+            )
+        }
+
 
     override val languageVersionSettingsCheckers: LanguageVersionSettingsCheckers
         get() = super.languageVersionSettingsCheckers

@@ -24,16 +24,20 @@ class LogMethodCallVisitor(
     val typeNullableAny = pluginContext.irBuiltIns.anyNType
     val typeUnit = pluginContext.irBuiltIns.unitType
 
+    fun doSomething(i: Int, s: String) {
+        println("⇢ doSomething(" + "i=" + i + ", " + "s=" + s)
+        // …
+    }
+
     val funPrintln = pluginContext.referenceFunctions(
         CallableId(
             packageName = FqName("kotlin.io"),
             callableName = Name.identifier("println"),
         )
-    )
-        .single {
-            val parameters = it.owner.parameters
-            parameters.size == 1 && parameters[0].type == typeNullableAny
-        }
+    ).single {
+        val parameters = it.owner.parameters
+        parameters.size == 1 && parameters[0].type == typeNullableAny
+    }
 
     override fun visitElement(element: IrElement) {
         element.acceptChildren(this, null)
@@ -71,8 +75,7 @@ class LogMethodCallVisitor(
         private val function: IrFunction,
     ) : IrElementTransformerVoidWithContext() {
         override fun visitReturn(expression: IrReturn): IrExpression {
-            if (expression.returnTargetSymbol != function.symbol)
-                return super.visitReturn(expression)
+            if (expression.returnTargetSymbol != function.symbol) return super.visitReturn(expression)
 
             return DeclarationIrBuilder(pluginContext, function.symbol).irBlock {
                 val result = irTemporary(expression.value)

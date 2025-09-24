@@ -1,0 +1,9 @@
+FILE: unsafeCalls.kt
+    public final fun testCheck(): R|kotlin/Unit| {
+        lval s: R|kotlin/Int| = Int(3).R|kotlin/Int.times|(Int(7)).R|kotlin/Int.times|(Int(9))
+        R|kotlin/check|(==(R|<local>/s|.R|kotlin/Int.rem|(Int(11)), Int(0)))
+    }
+    @R|com/droidcon/kcp/AllowUnsafeCalls|() public final fun testAllowed(): R|kotlin/Unit| {
+        lval s: R|kotlin/Int| = Int(208).R|kotlin/Int.plus|(Int(195))
+        R|kotlin/check|(==(R|<local>/s|.R|kotlin/Int.rem|(Int(13)), Int(0)))
+    }

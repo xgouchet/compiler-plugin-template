@@ -1,0 +1,16 @@
+FILE: logMethod.kt
+    public final fun box(): R|kotlin/String| {
+        lval result: R|kotlin/String?| = R|/logMePlease|(Int(42), String(Lorem ipsum dolor sit amet…))
+        ^box String(OK)
+    }
+    @R|com/droidcon/kcp/LogMethod|() public final fun logMePlease(i: R|kotlin/Int|, s: R|kotlin/String|): R|kotlin/String?| {
+        ^logMePlease when () {
+            CMP(>=, R|<local>/i|.R|kotlin/Int.compareTo|(Int(0))) && CMP(<, R|<local>/i|.R|kotlin/Int.compareTo|(R|<local>/s|.R|kotlin/String.length|)) ->  {
+                String([).R|kotlin/String.plus|(R|<local>/s|.R|kotlin/String.get|(R|<local>/i|)).R|kotlin/String.plus|(String(]))
+            }
+            else ->  {
+                Null(null)
+            }
+        }
+
+    }

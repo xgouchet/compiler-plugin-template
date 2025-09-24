@@ -1,6 +1,5 @@
 package com.droidcon.kcp.kotlin.ir
 
-import com.droidcon.kcp.kotlin.SampleCompilerPluginRegistrar
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.cli.common.messages.CompilerMessageSeverity
@@ -19,7 +18,7 @@ class SampleIrGenerationExtension(
         messageCollector.report(CompilerMessageSeverity.WARNING, "generate")
 
         val transformers = listOf(
-            LogMethodCallVisitor(pluginContext, messageCollector)
+            LogMethodCallVisitor(pluginContext, messageCollector),
         )
 
         for (transformer in transformers) {
